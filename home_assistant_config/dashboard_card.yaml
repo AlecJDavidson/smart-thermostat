@@ -1,0 +1,15 @@
+type: entities
+title: Thermostat
+entities:
+  - entity: sensor.thermostat_temperature
+    name: Current Temperature
+    icon: mdi:thermometer
+  - entity: input_select.thermostat_mode
+    name: Mode
+    icon: mdi:thermostat
+  - entity: input_number.thermostat_target_temperature
+    name: Target Temperature
+    icon: mdi:thermometer-lines
+show_header_toggle: false
+state_color: false
+

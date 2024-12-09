@@ -1,0 +1,24 @@
+# REST commands for ESP32 thermostat
+
+# Set thermostat mode
+set_thermostat_mode:
+  url: >
+    {% if mode == "off" %}
+    http://<your-ip>/api/off
+    {% elif mode == "heat" %}
+    http://<your-ip>/api/heat/{{ states('input_number.thermostat_target_temperature') | int }}
+    {% elif mode == "cool" %}
+    http://<your-ip>/api/cool/{{ states('input_number.thermostat_target_temperature') | int }}
+    {% endif %}
+  method: GET
+
+# Set thermostat temperature
+set_thermostat_temperature:
+  url: >
+    {% if states('input_select.thermostat_mode') == "heat" %}
+    http://<your-ip>/api/heat/{{ temperature }}
+    {% elif states('input_select.thermostat_mode') == "cool" %}
+    http://<your-ip>/api/cool/{{ temperature }}
+    {% endif %}
+  method: GET
+

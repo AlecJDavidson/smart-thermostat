@@ -1,0 +1,29 @@
+# Update thermostat mode when input_select changes
+- alias: Update Thermostat Mode
+  trigger:
+    - platform: state
+      entity_id: input_select.thermostat_mode
+  action:
+    - service: rest_command.set_thermostat_mode
+      data:
+        mode: "{{ states('input_select.thermostat_mode') }}"
+
+# Update target temperature when input_number changes
+- alias: Update Thermostat Target Temperature
+  trigger:
+    - platform: state
+      entity_id: input_number.thermostat_target_temperature
+  action:
+    - service: rest_command.set_thermostat_temperature
+      data:
+        temperature: "{{ states('input_number.thermostat_target_temperature') | int }}"
+
+# Poll thermostat temperature every 10 seconds
+- alias: Poll Thermostat Temperature
+  trigger:
+    - platform: time_pattern
+      seconds: "/10"  # Poll every 10 seconds
+  action:
+    - service: homeassistant.update_entity
+      target:
+        entity_id: sensor.thermostat_temperature

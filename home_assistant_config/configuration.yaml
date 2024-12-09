@@ -1,0 +1,29 @@
+
+# ESP32 Smart Thermostat
+# Temperature sensor endpoint on ESP32 thermostat
+sensor:
+  - platform: rest
+    name: Thermostat Temperature
+    resource: http://<your-ip>/api/temp
+    value_template: "{{ value_json.temperature }}"
+    unit_of_measurement: "°F"
+    scan_interval: 10
+
+input_select:
+  thermostat_mode:
+    name: Thermostat Mode
+    options:
+      - "off"
+      - "heat"
+      - "cool"
+    initial: "off"
+    icon: mdi:thermostat
+
+input_number:
+  thermostat_target_temperature:
+    name: Target Temperature
+    initial: 68
+    min: 50
+    max: 90
+    step: 1
+    unit_of_measurement: "°F"
