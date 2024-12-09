@@ -9,7 +9,7 @@ from relay import Relay
 # Initialize relays
 heat_relay = Relay(33)
 cool_relay = Relay(25)
-fan_relay = Relay(27)
+fan_relay = Relay(26)
 
 # Default settings
 temperature_unit = "F"  # 'F' for Fahrenheit, 'C' for Celsius

@@ -14,11 +14,12 @@ This project is a smart thermostat built using an ESP32. It allows users to cont
 ### Prerequisites
 
 1. **Hardware Requirements**:
+
    - **ESP32**
    - **DHT11** sensor on GPIO pin **32** (Temperature reading)
    - **Relay 1** for heating control on GPIO pin **33**
    - **Relay 2** for cooling control on GPIO pin **25**
-   - **Relay 3** for fan control on GPIO pin **27**
+   - **Relay 3** for fan control on GPIO pin **26**
 
 2. **Home Assistant**: To enable advanced automation and dashboard features.
 
@@ -33,6 +34,7 @@ This project is a smart thermostat built using an ESP32. It allows users to cont
 ### ESP32 Setup
 
 1. **Configure WiFi**:
+
    - Locate the `wifi_config_base.json` file in the `src` folder.
    - Populate it with your WiFi credentials:
      ```json
@@ -44,9 +46,11 @@ This project is a smart thermostat built using an ESP32. It allows users to cont
    - Rename this file to `wifi_config.json`.
 
 2. **Update IP Addresses**:
+
    - Replace all instances of `<your-ip>` in the project with the actual IP address of your ESP32.
 
 3. **Upload Files**:
+
    - Use a tool like `ampy` or an IDE like Thonny to upload the following files from the `src` folder to your ESP32:
      - `main.py`
      - `boot.py`
@@ -60,13 +64,14 @@ This project is a smart thermostat built using an ESP32. It allows users to cont
    - DHT11 sensor: GPIO **32**
    - Heating relay: GPIO **33**
    - Cooling relay: GPIO **25**
-   - Fan relay: GPIO **27**
+   - Fan relay: GPIO **26**
 
 ---
 
 ### Home Assistant Integration
 
 1. **Copy Configuration Files**:
+
    - Navigate to the `home_assistant_config` folder.
    - Copy the following YAML files to your Home Assistant configuration directory:
      - `rest_commands.yaml`
@@ -86,8 +91,9 @@ The thermostat server hosts a REST API for controlling and monitoring the device
 ### Endpoints
 
 1. **GET /api/temp**
+
    - **Description**: Retrieves the current temperature from the DHT11 sensor.
-   - **Response**: 
+   - **Response**:
      ```json
      {
        "temperature_f": 72.5,
@@ -96,6 +102,7 @@ The thermostat server hosts a REST API for controlling and monitoring the device
      ```
 
 2. **POST /api/set_temperature**
+
    - **Description**: Sets the desired temperature for the thermostat.
    - **Body**:
      ```json
@@ -105,6 +112,7 @@ The thermostat server hosts a REST API for controlling and monitoring the device
      ```
 
 3. **POST /api/mode**
+
    - **Description**: Changes the operating mode of the thermostat.
    - **Body**:
      ```json
@@ -132,16 +140,19 @@ You can interact with these endpoints using tools like `curl`, Postman, or any H
 #### Example Requests
 
 1. **Get Current Temperature**:
+
    ```bash
    curl http://<your-ip>/api/temperature
    ```
 
 2. **Set Desired Temperature**:
+
    ```bash
    curl -X POST http://<your-ip>/api/set_temperature -H "Content-Type: application/json" -d '{"set_temperature": 75}'
    ```
 
 3. **Change Mode**:
+
    ```bash
    curl -X POST http://<your-ip>/api/mode -H "Content-Type: application/json" -d '{"mode": "cool"}'
    ```
@@ -155,13 +166,12 @@ You can interact with these endpoints using tools like `curl`, Postman, or any H
 
 ## GPIO Pins
 
-| GPIO Pin | Function          | Connection    |
-|----------|-------------------|---------------|
-| **32**   | Temperature Sensor | DHT11        |
-| **33**   | Heating Control   | Relay 1       |
-| **25**   | Cooling Control   | Relay 2       |
-| **27**   | Fan Control       | Relay 3       |
-
+| GPIO Pin | Function           | Connection |
+| -------- | ------------------ | ---------- |
+| **32**   | Temperature Sensor | DHT11      |
+| **33**   | Heating Control    | Relay 1    |
+| **25**   | Cooling Control    | Relay 2    |
+| **26**   | Fan Control        | Relay 3    |
 
 ---
 
