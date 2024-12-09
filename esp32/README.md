@@ -6,6 +6,7 @@ This project provides a convenient Bash script to prepare, flash, and set up an 
 ## Prerequisites
 
 Before using the script, ensure the following are installed and accessible on your system:
+Don't forget to create the wifi_config.json and add your ssid and password!
 
 1. **Python 3** and `pip`
    - Used to install tools like `esptool.py` and `rshell`.
