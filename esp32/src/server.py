@@ -95,10 +95,9 @@ def update_relay():
     except Exception as e:
         print("Error updating relays:", e)
 
-
 # Handle API requests
 def handle_request(request):
-    global temperature_unit, default_temperature, mode
+    global temperature_unit, default_temperature, mode, dht11_offset
 
     try:
         print(f"Received request: {request}")
@@ -123,7 +122,7 @@ def handle_request(request):
 
         if request.startswith("/api/set_dht11_offset/"):
             dht11_offset = int(request.split("/api/set_dht11_offset/")[-1])
-            return {"status": "", "DHT11 Temp Offset": dht11_offset}
+            return {"status": "success", "DHT11 Temp Offset": dht11_offset}
 
         elif request.startswith("/api/off"):
             mode = "off"
@@ -173,7 +172,6 @@ def handle_request(request):
     except Exception as e:
         print("Error handling request:", e)
         return {"error": str(e)}
-
 
 # Web server with periodic temperature logging and relay updates
 def web_server(ip_address):
