@@ -124,6 +124,9 @@ def handle_request(request):
             dht11_offset = int(request.split("/api/set_dht11_offset/")[-1])
             return {"status": "success", "DHT11 Temp Offset": dht11_offset}
 
+        if request.startswith("/api/read_dht11_offset/"):
+            return {"status": "success", "DHT11 Temp Offset is set to ": dht11_offset}
+
         elif request.startswith("/api/off"):
             mode = "off"
             return {"mode": "off", "set_temperature": None}
