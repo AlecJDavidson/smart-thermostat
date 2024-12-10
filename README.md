@@ -90,6 +90,8 @@ The thermostat server hosts a REST API for controlling and monitoring the device
 
 ### Endpoints
 
+## Needs updated! Please view the endpoints in /<board>/src/api.py
+
 1. **GET /api/temp**
 
    - **Description**: Retrieves the current temperature from the DHT11 sensor.
@@ -139,32 +141,11 @@ You can interact with these endpoints using tools like `curl`, Postman, or any H
 
 #### Example Requests
 
-1. **Get Current Temperature**:
+## Needs updated! Please view the endpoints in /<board>/src/api.py
 
-   ```bash
-   curl http://<your-ip>/api/temperature
-   ```
+#### GPIO Pins
 
-2. **Set Desired Temperature**:
-
-   ```bash
-   curl -X POST http://<your-ip>/api/set_temperature -H "Content-Type: application/json" -d '{"set_temperature": 75}'
-   ```
-
-3. **Change Mode**:
-
-   ```bash
-   curl -X POST http://<your-ip>/api/mode -H "Content-Type: application/json" -d '{"mode": "cool"}'
-   ```
-
-4. **Get Thermostat Status**:
-   ```bash
-   curl http://<your-ip>/api/status
-   ```
-
----
-
-## GPIO Pins
+## These can be set in /<board>/src/settings.py
 
 | GPIO Pin | Function           | Connection |
 | -------- | ------------------ | ---------- |
