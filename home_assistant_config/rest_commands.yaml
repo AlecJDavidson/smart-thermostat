@@ -4,11 +4,11 @@
 set_thermostat_mode:
   url: >
     {% if mode == "off" %}
-    http://<your-ip>/api/off
+    http://<your-ip>/api/system/off
     {% elif mode == "heat" %}
-    http://<your-ip>/api/heat/{{ states('input_number.thermostat_target_temperature') | int }}
+    http://<your-ip>/api/control/heat/{{ states('input_number.thermostat_target_temperature') | int }}
     {% elif mode == "cool" %}
-    http://<your-ip>/api/cool/{{ states('input_number.thermostat_target_temperature') | int }}
+    http://<your-ip>/api/control/cool/{{ states('input_number.thermostat_target_temperature') | int }}
     {% endif %}
   method: GET
 
@@ -16,9 +16,9 @@ set_thermostat_mode:
 set_thermostat_temperature:
   url: >
     {% if states('input_select.thermostat_mode') == "heat" %}
-    http://<your-ip>/api/heat/{{ temperature }}
+    http://<your-ip>/api/control/heat/{{ temperature }}
     {% elif states('input_select.thermostat_mode') == "cool" %}
-    http://<your-ip>/api/cool/{{ temperature }}
+    http://<your-ip>/api/control/cool/{{ temperature }}
     {% endif %}
   method: GET
 

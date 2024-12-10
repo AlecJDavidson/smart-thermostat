@@ -4,7 +4,7 @@
 sensor:
   - platform: rest
     name: Thermostat Temperature
-    resource: http://<your-ip>/api/temp
+    resource: http://<your-ip>/api/status/temp
     value_template: "{{ value_json.temperature }}"
     unit_of_measurement: "°F"
     scan_interval: 10
