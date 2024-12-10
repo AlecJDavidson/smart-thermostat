@@ -5,7 +5,7 @@ This project is a smart thermostat built using an ESP32. It allows users to cont
 ## Features
 
 - **Temperature Control**: Set heating or cooling based on your preferences.
-- **Web Interface**: Control the thermostat and view the current temperature from a browser.
+- **REST API**: Control the thermostat and view the current temperature using API calls.
 - **Home Assistant Integration**: Automations and dashboard cards for centralized control.
 - **WiFi Configuration**: Easily configure your WiFi settings.
 
