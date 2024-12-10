@@ -15,6 +15,7 @@ fan_relay = Relay(26)
 temperature_unit = "F"  # 'F' for Fahrenheit, 'C' for Celsius
 default_temperature = 68
 current_temperature = None
+dht11_offset = 0
 current_humidity = None
 mode = "off"  # "heat", "cool", or "off"
 
@@ -22,25 +23,28 @@ mode = "off"  # "heat", "cool", or "off"
 # Read temperature from DHT11
 def read_temperature():
     global current_temperature
+    global dht11_offset
     try:
-        temp_c = get_temp() 
+        temp_c = get_temp()
         temp_f = temp_c * 9 / 5 + 32
-        current_temperature = temp_f if temperature_unit == "F" else temp_c
+        current_temperature = (
+            temp_f + dht11_offset if temperature_unit == "F" else temp_c
+        )
         return current_temperature
     except Exception as e:
         print("Error reading DHT11:", e)
         return None
 
+
 def read_humidity():
     global current_humidity
     try:
-        humidity = get_humidity() 
+        humidity = get_humidity()
         current_humidity = humidity
         return current_humidity
     except Exception as e:
         print("Error reading DHT11:", e)
         return None
-
 
 
 # Automatically update relay states based on mode and temperature
@@ -57,21 +61,29 @@ def update_relay():
 
         if mode == "heat":
             if current_temperature < default_temperature:
-                print(f"Heating: Turning on heat relay. Current temp: {current_temperature}°{temperature_unit}")
+                print(
+                    f"Heating: Turning on heat relay. Current temp: {current_temperature}°{temperature_unit}"
+                )
                 heat_relay.on()
                 fan_relay.on()
             else:
-                print(f"Heating: Current temp ({current_temperature}°{temperature_unit}) >= set temp ({default_temperature}°{temperature_unit}). Turning off heat relay.")
+                print(
+                    f"Heating: Current temp ({current_temperature}°{temperature_unit}) >= set temp ({default_temperature}°{temperature_unit}). Turning off heat relay."
+                )
                 heat_relay.off()
                 fan_relay.off()
 
         elif mode == "cool":
             if current_temperature > default_temperature:
-                print(f"Cooling: Turning on cool relay. Current temp: {current_temperature}°{temperature_unit}")
+                print(
+                    f"Cooling: Turning on cool relay. Current temp: {current_temperature}°{temperature_unit}"
+                )
                 cool_relay.on()
                 fan_relay.on()
             else:
-                print(f"Cooling: Current temp ({current_temperature}°{temperature_unit}) <= set temp ({default_temperature}°{temperature_unit}). Turning off cool relay.")
+                print(
+                    f"Cooling: Current temp ({current_temperature}°{temperature_unit}) <= set temp ({default_temperature}°{temperature_unit}). Turning off cool relay."
+                )
                 cool_relay.off()
                 fan_relay.off()
 
@@ -108,6 +120,10 @@ def handle_request(request):
             mode = "cool"
             default_temperature = temp_value
             return {"mode": "cool", "set_temperature": temp_value}
+
+        if request.startswith("/api/set_dht11_offset/"):
+            dht11_offset = int(request.split("/api/set_dht11_offset/")[-1])
+            return {"status": "", "DHT11 Temp Offset": dht11_offset}
 
         elif request.startswith("/api/off"):
             mode = "off"
